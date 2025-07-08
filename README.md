@@ -21,11 +21,11 @@ This project is a simple Java-based system that simulates an extensible online b
 
 ## Class Diagram
 
-![Class Diagram](./classDiagram.png)
+![Class Diagram](./assets//classDiagram.png)
 
 ## Sample Output
 
-![Program Output](./screenOfRunning.png)
+![Program Output](./assets//screenOfRunning.png)
 
 ## Running the Project
 
