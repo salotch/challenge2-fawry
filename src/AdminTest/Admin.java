@@ -11,7 +11,7 @@ import inventory.Inventory;
 
 public class Admin {
     private Inventory inventory;
-    private Map<Long, Double> orders = new HashMap<>();// contains all the orders details <order number, order amount
+    private Map<String, Double> orders = new HashMap<>();// contains all the orders details <order number, order amount
 
     public Admin(Inventory inventory) {
         this.inventory = inventory;
@@ -28,7 +28,7 @@ public class Admin {
     public double buyBook(String isbn, int quantity, String email, String address) {
 
         double paid = inventory.buyBook(isbn, quantity, email, address);
-        Long orderNum = GenerateOrderNum();
+        String orderNum = GenerateOrderNum();
         System.out.println("your order number is: " + orderNum);
         orders.put(orderNum, paid);
         return paid;
@@ -40,7 +40,7 @@ public class Admin {
     }
 
     // ..................... its a temp fuction we can change the logic latter
-    public void returnPaidAmount(Long orderNum, String email) {
+    public void returnPaidAmount(String orderNum, String email) {
         if (orders.get(orderNum) != null)
             System.out.println(
                     "your paid amount is equal to: " + orders.get(orderNum) + " and is returned just check your mail");
@@ -49,25 +49,19 @@ public class Admin {
 
     }
 
-    public long GenerateOrderNum() {
+    private String GenerateOrderNum() {
         // a temp function to generate order number it's logic maybe changed after that
-        DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
         int MAX_SUFFIX = 999;
         AtomicInteger counter = new AtomicInteger(0);
 
-        // Format current date-time to a string like 20250708193045012
-        // (yyyyMMddHHmmssSSS)
-        String timestamp = LocalDateTime.now().format(FORMATTER);
-
-        // Ensure the counter resets if it gets too big
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
         int suffix = counter.getAndIncrement();
+
         if (suffix > MAX_SUFFIX) {
             counter.set(0);
             suffix = 0;
         }
 
-        // Concatenate the timestamp and a 3-digit suffix
-        String fullNumber = timestamp + String.format("%03d", suffix);
-        return Long.parseLong(fullNumber);
+        return timestamp + String.format("%03d", suffix); // return as String
     }
 }
