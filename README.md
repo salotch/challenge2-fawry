@@ -38,7 +38,7 @@ javac *.java
 Run the test class:
 
 ```bash
-java QuantumBookstoreFullTest
+java Main
 ```
 
 ## Requirements
